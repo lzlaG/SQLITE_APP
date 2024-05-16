@@ -2,6 +2,8 @@
 #include "ui_mainwindow.h"
 #include <QFileDialog> // обязательно для подключения, так как без него не будет работать выбор файла
 #include <QtSql>
+#include <QtGui>
+#include <QMessageBox>
 
 
 MainWindow::MainWindow(QWidget *parent)
@@ -11,7 +13,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
 }
 
-class DBCONNECT
+class DBCONNECT // класс для управления базой данных
 {
     private:
         QSqlDatabase m_db;
@@ -19,17 +21,20 @@ class DBCONNECT
         DBCONNECT(const QString& path);
 };
 
-DBCONNECT::DBCONNECT(const QString &path)
+DBCONNECT::DBCONNECT(const QString &path) //конструктор для открытия базы данных и проверки(открыдась или нет)
 {
     m_db = QSqlDatabase::addDatabase("QSQLITE", "DATA");
     m_db.setDatabaseName(path);
+    QMessageBox msgBox;
     if (!m_db.open())
     {
-        qDebug() << "Ошибка. База данных не открылась";
+        msgBox.setText("База данных не открылась. Проверьте корректность пути и файла");
+        msgBox.exec();
     }
     else
     {
-        qDebug() << "Успех. База данных открылась";
+        msgBox.setText("Успех! База данных открылась");
+        msgBox.exec();
     }
 }
 
@@ -39,10 +44,11 @@ MainWindow::~MainWindow()
 }
 
 
-void MainWindow::on_pushButton_clicked()
+void MainWindow::on_pushButton_clicked() // задание действия для кнопки
 {
     QString fileName = QFileDialog::getOpenFileName(this,
-            tr("Выберите SQLITE базу данных"), "", tr("Databases (*.db)"));
+            tr("Выберите SQLITE базу данных"), "", tr("Databases (*.db)")); // данная строка задает открытие диалогово окна с фильтром. Фильтр прописан чтобы показывались только файлы с расширением db
     DBCONNECT our_db(fileName);
 }
+
 
