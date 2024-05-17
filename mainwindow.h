@@ -18,6 +18,7 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+// созданные слоты
 private slots:
     void on_pushButton_clicked();
     void on_pushButton_2_clicked();
@@ -26,10 +27,8 @@ private slots:
 private:
     Ui::MainWindow *ui;
 protected:
-    QSqlQuery *query;
-    QSqlTableModel *model;
-    DataBaseManager *db;
-    void DrawTable();
-    QModelIndexList selectedRows;
+    QSqlTableModel *model; // переменная для здания модели данных
+    DataBaseManager *db; // бд
+    void DrawTable(); // функция для отрисовки таблицы
 };
 #endif // MAINWINDOW_H
