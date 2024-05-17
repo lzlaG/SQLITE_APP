@@ -21,6 +21,7 @@ public:
 private slots:
     void on_pushButton_clicked();
     void on_pushButton_2_clicked();
+    void on_tableView_clicked(const QModelIndex &index);
 
 private:
     Ui::MainWindow *ui;
@@ -29,5 +30,6 @@ protected:
     QSqlTableModel *model;
     DataBaseManager *db;
     void DrawTable();
+    QModelIndexList selectedRows;
 };
 #endif // MAINWINDOW_H
