@@ -76,5 +76,9 @@ void MainWindow::on_pushButton_2_clicked()
 void MainWindow::on_tableView_clicked(const QModelIndex &index)
 {
     ui->pushButton_2->setEnabled(true); // делаем кнопку удаления активной, если выделена строка
+    QModelIndex current = ui->tableView->currentIndex();
+    int id = current.sibling(current.row(), 0).data().toInt();
+    QString additional_information = db->AditionalInfo(id);
+    ui->label->setText(additional_information);
 }
 
