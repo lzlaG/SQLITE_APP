@@ -43,8 +43,8 @@ class DataBaseManager //класс для управления бд
                 qWarning() << "Не удалось выполнить запрос";
             }
             query.next();
-            QString name = query.value(0).toString()+" "+query.value(1).toString();
-            return name;
+            QString info = query.value(1).toString()+" "+query.value(0).toString();
+            return info;
         }
 };
 

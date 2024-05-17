@@ -79,6 +79,6 @@ void MainWindow::on_tableView_clicked(const QModelIndex &index)
     QModelIndex current = ui->tableView->currentIndex();
     int id = current.sibling(current.row(), 0).data().toInt();
     QString additional_information = db->AditionalInfo(id);
-    ui->label->setText(additional_information);
+    ui->label->setText("Дополнительная информация\nПоследняя дата посещения: "+additional_information.mid(0,20)+"\nКоличество посещений: "+additional_information.mid(20));
 }
 
