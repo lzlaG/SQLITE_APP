@@ -23,7 +23,13 @@ class DataBaseManager //класс для управления бд
             {
                 return true;
             }
-        }
+        };
+        void DeleteRow(int row_index) // функция для удаления записи из бд
+        {
+            QSqlQuery query;
+            query.prepare("delete from Mutants where (ID = "+QString::number(row_index)+")");
+            query.exec();
+        };
 };
 
 #endif // DB_H

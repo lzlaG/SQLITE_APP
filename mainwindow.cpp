@@ -61,6 +61,9 @@ void MainWindow::on_pushButton_2_clicked()
         ui->tableView->model()->removeRow(index.row()); // удаляем строки в цикле
     }
     this->DrawTable();// перерисовываем таблицу с уже новыми данными
+    QModelIndex current = ui->tableView->currentIndex();
+    int id = current.sibling(current.row(), 0).data().toInt();
+    db->DeleteRow(id);
     ui->pushButton_2->setDisabled(true); // делаем кнопку снова не активной после удаления записи
 }
 
