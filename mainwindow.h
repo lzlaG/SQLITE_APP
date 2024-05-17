@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <QtSql>
 #include <QSqlTableModel>
+#include "db.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -24,8 +25,9 @@ private slots:
 private:
     Ui::MainWindow *ui;
 protected:
-    QSqlDatabase m_db;
     QSqlQuery *query;
     QSqlTableModel *model;
+    DataBaseManager *db;
+    void DrawTable();
 };
 #endif // MAINWINDOW_H
