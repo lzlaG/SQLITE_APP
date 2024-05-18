@@ -22,8 +22,8 @@ MainWindow::~MainWindow()
 void MainWindow::DrawTable()
 {
     model = new QSqlTableModel(this);
-    model->setTable("urls");
-    model->select();
+    model->setTable("urls"); // выбираем таблицуиз бд, которую будем отображать
+    model->select(); //
     ui->tableView->setModel(model); // задаем модель
     ui->tableView->resizeColumnsToContents(); // делаем колонки размером с сосдержимым
     // скрываем лишние столбцы
@@ -35,6 +35,8 @@ void MainWindow::DrawTable()
     ui->tableView->setSelectionBehavior(QAbstractItemView::SelectRows);
     // Устанавливаем режим выделения лишь одно строки в таблице
     ui->tableView->setSelectionMode(QAbstractItemView::SingleSelection);
+    ui->tableView->setColumnWidth(1,250);
+    ui->tableView->setColumnWidth(2,400);
 };
 
 void MainWindow::on_pushButton_clicked() // задание действия для кнопки открытия бд
@@ -44,7 +46,7 @@ void MainWindow::on_pushButton_clicked() // задание действия дл
     db = new DataBaseManager(); // указываем путь к бд
     db->OpenDB(fileName); // открываем бд
     QMessageBox msgBox; // создаем сообщение
-    if (db->IsOpen()) // проверка открытия базы
+    if (db->IsOpen() && !fileName.isEmpty()) // проверка открытия базы
     {
         msgBox.setText("Успех! База данных открылась"); // задаем текст сообщения
         msgBox.exec();
@@ -68,17 +70,18 @@ void MainWindow::on_pushButton_2_clicked()
     this->DrawTable();// перерисовываем таблицу с уже новыми данными
     QModelIndex current = ui->tableView->currentIndex();
     int id = current.sibling(current.row(), 0).data().toInt();
-    db->DeleteRow(id);
+    db->DeleteRow(id); // удаляем строку из бд
     ui->pushButton_2->setDisabled(true); // делаем кнопку снова не активной после удаления записи
 }
 
 
-void MainWindow::on_tableView_clicked(const QModelIndex &index)
+void MainWindow::on_tableView_clicked() // слот, который срабатывает если пользователь кликнул на строку
 {
     ui->pushButton_2->setEnabled(true); // делаем кнопку удаления активной, если выделена строка
-    QModelIndex current = ui->tableView->currentIndex();
-    int id = current.sibling(current.row(), 0).data().toInt();
-    QString additional_information = db->AditionalInfo(id);
-    ui->label->setText("Дополнительная информация\nПоследняя дата посещения: "+additional_information.mid(0,20)+"\nКоличество посещений: "+additional_information.mid(20));
+    QModelIndex current = ui->tableView->currentIndex(); // получаем текущий индекс выделенной строки
+    int id = current.sibling(current.row(), 0).data().toInt(); // конвертируем полученный индекс в целое число
+    QString additional_information = db->AditionalInfo(id); // записываем в строку данные из бд
+    ui->label->setText("Дополнительная информация\nПоследняя дата посещения: "+additional_information.mid(0,20)+
+                       "\nКоличество посещений: "+additional_information.mid(20)); // устанавливаем текст лейбла на нужный нам
 }
 

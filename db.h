@@ -27,10 +27,10 @@ class DataBaseManager //класс для управления бд
         void DeleteRow(int row_index) // функция для удаления записи из бд
         {
             QSqlQuery query;
-            query.prepare("delete from urls where (id = "+QString::number(row_index)+")");
+            query.prepare("delete from urls where (id = "+QString::number(row_index)+")"); // готовим запрос
             query.exec();
         };
-        QString AditionalInfo(int id)
+        QString AditionalInfo(int id) // функция для получения дополнительной информации
         {
             if (!my_db.open())
             {
@@ -38,11 +38,12 @@ class DataBaseManager //класс для управления бд
             }
             QSqlQuery query;
             query.prepare("SELECT visit_count,datetime(last_visit_time/1000000-11644473600,'unixepoch','localtime') FROM urls WHERE (id = "+QString::number(id)+")");
-            if (!query.exec())
+            if (!query.exec()) // выполнение запроса
             {
                 qWarning() << "Не удалось выполнить запрос";
             }
-            query.next();
+            query.next(); // переходим к первой строке в результате запроса
+            //записываем значения из колонок в строку
             QString info = query.value(1).toString()+" "+query.value(0).toString();
             return info;
         }
