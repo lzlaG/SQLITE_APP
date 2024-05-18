@@ -21,14 +21,10 @@ public:
 // созданные слоты
 private slots:
     void on_pushButton_clicked();
-    void on_pushButton_2_clicked();
-    void on_tableView_clicked();
 
 private:
     Ui::MainWindow *ui;
 protected:
-    QSqlTableModel *model; // переменная для здания модели данных
     DataBaseManager *db; // бд
-    void DrawTable(); // функция для отрисовки таблицы
 };
 #endif // MAINWINDOW_H

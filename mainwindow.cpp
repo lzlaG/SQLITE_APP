@@ -11,7 +11,6 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    ui->pushButton_2->setDisabled(true); // делаем кнопку удаления по умолчанию выключенной
 }
 
 MainWindow::~MainWindow()
@@ -19,25 +18,6 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::DrawTable()
-{
-    model = new QSqlTableModel(this);
-    model->setTable("urls"); // выбираем таблицуиз бд, которую будем отображать
-    model->select(); //
-    ui->tableView->setModel(model); // задаем модель
-    ui->tableView->resizeColumnsToContents(); // делаем колонки размером с сосдержимым
-    // скрываем лишние столбцы
-    ui->tableView->hideColumn(3);
-    ui->tableView->hideColumn(4);
-    ui->tableView->hideColumn(5);
-    ui->tableView->hideColumn(6);
-    //разрешаем выделение строк
-    ui->tableView->setSelectionBehavior(QAbstractItemView::SelectRows);
-    // Устанавливаем режим выделения лишь одно строки в таблице
-    ui->tableView->setSelectionMode(QAbstractItemView::SingleSelection);
-    ui->tableView->setColumnWidth(1,250);
-    ui->tableView->setColumnWidth(2,400);
-};
 
 void MainWindow::on_pushButton_clicked() // задание действия для кнопки открытия бд
 {
@@ -50,38 +30,11 @@ void MainWindow::on_pushButton_clicked() // задание действия дл
     {
         msgBox.setText("Успех! База данных открылась"); // задаем текст сообщения
         msgBox.exec();
-        this->DrawTable(); // отрисовываем таблицу в случае успешного открытия
     }
     else
     {
         msgBox.setText("Ошибка. База данных не открылась. ПРоверьте правильность пути и файла.");
         msgBox.exec();
     }
-}
-
-
-
-void MainWindow::on_pushButton_2_clicked()
-{
-    QModelIndexList selectedRows = ui->tableView->selectionModel()->selectedRows(); // сохраняем выделенные строки в массив
-    foreach (const QModelIndex &index, selectedRows) {
-        ui->tableView->model()->removeRow(index.row()); // удаляем строки в цикле
-    }
-    this->DrawTable();// перерисовываем таблицу с уже новыми данными
-    QModelIndex current = ui->tableView->currentIndex();
-    int id = current.sibling(current.row(), 0).data().toInt();
-    db->DeleteRow(id); // удаляем строку из бд
-    ui->pushButton_2->setDisabled(true); // делаем кнопку снова не активной после удаления записи
-}
-
-
-void MainWindow::on_tableView_clicked() // слот, который срабатывает если пользователь кликнул на строку
-{
-    ui->pushButton_2->setEnabled(true); // делаем кнопку удаления активной, если выделена строка
-    QModelIndex current = ui->tableView->currentIndex(); // получаем текущий индекс выделенной строки
-    int id = current.sibling(current.row(), 0).data().toInt(); // конвертируем полученный индекс в целое число
-    QString additional_information = db->AditionalInfo(id); // записываем в строку данные из бд
-    ui->label->setText("Дополнительная информация\nПоследняя дата посещения: "+additional_information.mid(0,20)+
-                       "\nКоличество посещений: "+additional_information.mid(20)); // устанавливаем текст лейбла на нужный нам
 }
 
