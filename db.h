@@ -24,6 +24,12 @@ class DataBaseManager //класс для управления бд
                 return true;
             }
         };
+        void DeleteRow(QString id) // функция для удаления записи из бд
+        {
+            QSqlQuery query;
+            query.prepare("delete from urls where (id = "+id+")"); // готовим запрос
+            query.exec();
+        };
 };
 
 #endif // DB_H

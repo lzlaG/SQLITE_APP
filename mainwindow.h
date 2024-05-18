@@ -23,7 +23,9 @@ public:
 private slots:
     void on_pushButton_clicked();
 
-    void on_debug_button_clicked();
+    void on_treeView_clicked(const QModelIndex &index);
+
+    void on_delete_button_clicked();
 
 private:
     Ui::MainWindow *ui;

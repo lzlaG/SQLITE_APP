@@ -19,31 +19,12 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    ui->delete_button->setDisabled(true);
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
-}
-
-
-void MainWindow::on_pushButton_clicked() // задание действия для кнопки открытия бд
-{
-    QString fileName = QFileDialog::getOpenFileName(this,
-            tr("Выберите SQLITE базу данных"), "", tr("Chromium Databases (History*)")); // данная строка задает открытие диалогово окна с фильтром. Фильтр прописан чтобы показывались только файлы с расширением db
-    db = new DataBaseManager(); // указываем путь к бд
-    db->OpenDB(fileName); // открываем бд
-    QMessageBox msgBox; // создаем сообщение
-    if (db->IsOpen() && !fileName.isEmpty()) // проверка открытия базы
-    {
-        msgBox.setText("Успех! База данных открылась"); // задаем текст сообщения
-        msgBox.exec();
-    }
-    else
-    {
-        msgBox.setText("Ошибка. База данных не открылась. ПРоверьте правильность пути и файла.");
-        msgBox.exec();
-    }
 }
 
 void MainWindow::FillTree()
@@ -92,13 +73,51 @@ void MainWindow::FillTree()
         model->setItem(i, 1, item2);
     };*/
 };
-void MainWindow::on_debug_button_clicked()
+
+void MainWindow::on_pushButton_clicked() // задание действия для кнопки открытия бд
 {
-    FillTree();
-    ui->treeView->setModel(model);
-    ui->treeView->hideColumn(0);
-    ui->treeView->hideColumn(1);
-    ui->treeView->hideColumn(4);
-    ui->treeView->show();
-};
+    QString fileName = QFileDialog::getOpenFileName(this,
+            tr("Выберите SQLITE базу данных"), "", tr("Chromium Databases (History*)")); // данная строка задает открытие диалогово окна с фильтром. Фильтр прописан чтобы показывались только файлы с расширением db
+    db = new DataBaseManager(); // указываем путь к бд
+    db->OpenDB(fileName); // открываем бд
+    QMessageBox msgBox; // создаем сообщение
+    if (db->IsOpen() && !fileName.isEmpty()) // проверка открытия базы
+    {
+        msgBox.setText("Успех! База данных открылась"); // задаем текст сообщения
+        msgBox.exec();
+        FillTree();
+        ui->treeView->setModel(model);
+        ui->treeView->hideColumn(0);
+        ui->treeView->hideColumn(1);
+        ui->treeView->hideColumn(4);
+        ui->treeView->show();
+    }
+    else
+    {
+        msgBox.setText("Ошибка. База данных не открылась. ПРоверьте правильность пути и файла.");
+        msgBox.exec();
+    }
+}
+
+
+void MainWindow::on_treeView_clicked(const QModelIndex &index)
+{
+    QModelIndex SelectedIndex = ui->treeView->selectionModel()->currentIndex();
+    QModelIndex HideData = model->index(SelectedIndex.row(),1);
+    QModelIndex HideVisitCount = model->index(SelectedIndex.row(),4);
+    ui->add_info->setText("Дополнительная информация\nДата последнего посещения: "+HideData.data().toString()
+                          +"\nКоличество посещений: "+HideVisitCount.data().toString());
+    ui->delete_button->setDisabled(false);
+}
+
+
+void MainWindow::on_delete_button_clicked()
+{
+    QModelIndex SelectedIndex = ui->treeView->selectionModel()->currentIndex();
+    QModelIndex HideId = model->index(SelectedIndex.row(),0);
+    db->DeleteRow(HideId.data().toString());
+    model->removeRow(SelectedIndex.row());
+    ui->treeView->update();
+    ui->delete_button->setDisabled(true);
+}
 
