@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include <QtSql>
+#include <QtGui>
 #include <QSqlTableModel>
 #include "db.h"
 
@@ -22,9 +23,14 @@ public:
 private slots:
     void on_pushButton_clicked();
 
+    void on_debug_button_clicked();
+
 private:
     Ui::MainWindow *ui;
 protected:
     DataBaseManager *db; // бд
+    void FillTree();
+    QStandardItemModel *model;
+    QStandardItem *rootItem;
 };
 #endif // MAINWINDOW_H
