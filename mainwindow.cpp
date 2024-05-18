@@ -79,6 +79,8 @@ void MainWindow::FillTree()
         model->setItem(i, 4, qvisit_count);
         i+=1;
     }
+    model->setHeaderData(2,Qt::Horizontal,"URL");
+    model->setHeaderData(3,Qt::Horizontal,"Title");
 
     //расскоментировать блок ниже если интересен тест с большим количеством записей
     /*
