@@ -94,6 +94,9 @@ void MainWindow::on_debug_button_clicked()
 {
     FillTree();
     ui->treeView->setModel(model);
+    ui->treeView->hideColumn(0);
+    ui->treeView->hideColumn(1);
+    ui->treeView->hideColumn(4);
     ui->treeView->show();
 };
 
