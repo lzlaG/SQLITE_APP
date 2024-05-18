@@ -31,8 +31,7 @@ private:
     Ui::MainWindow *ui;
 protected:
     DataBaseManager *db; // бд
-    void FillTree();
+    void FillTree(); // функция для заполнения
     QStandardItemModel *model;
-    QStandardItem *rootItem;
 };
 #endif // MAINWINDOW_H
