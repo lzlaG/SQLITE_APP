@@ -70,6 +70,7 @@ void MainWindow::FillTree()
     model->setHeaderData(3,Qt::Horizontal,"Title");
 
     //расскоментировать блок ниже если интересен тест с большим количеством записей
+    // при этом блок ввыше с sql закомментировать
     /*
     for (int i=0; i<1000000; i++)
     {
@@ -124,7 +125,7 @@ void MainWindow::on_delete_button_clicked()
     QModelIndex SelectedIndex = ui->treeView->selectionModel()->currentIndex();
     QModelIndex HideId = model->index(SelectedIndex.row(),0);
     db->DeleteRow(HideId.data().toString()); // удаляем строку из бд используя функцию из db manager
-    model->removeRow(SelectedIndex.row()); // удаляем строку из узлов
+    model->removeRow(SelectedIndex.row()); // удаляем узел
     ui->treeView->update(); // обновляем представление
     ui->add_info->setText(" "); // обновляем текст лейбла, так как запись удалилась
     ui->delete_button->setDisabled(true); // возвращаем кнопку обратно в неактивное состояние
