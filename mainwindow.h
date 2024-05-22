@@ -32,6 +32,6 @@ private:
 protected:
     DataBaseManager *db; // бд
     void FillTree(); // функция для заполнения
-    QStandardItemModel *model;
+    QStandardItemModel *model; //модель
 };
 #endif // MAINWINDOW_H

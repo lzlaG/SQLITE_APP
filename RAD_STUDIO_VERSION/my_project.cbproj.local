@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+	<Transactions>
+    <Transaction>1899.12.30 00:00:00.000.223,=C:\Users\User\Documents\abracadabra_rad_Studio\sqlite3.c</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.177,=C:\Users\User\Documents\abracadabra_rad_Studio\sqlite3.h</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.404,C:\Users\User\Documents\Embarcadero\Studio\Projects\Project1.cbproj=C:\Users\User\Documents\abracadabra_rad_Studio\my_Project.cbproj</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.388,C:\Users\User\Documents\Embarcadero\Studio\Projects\Unit1.cpp=C:\Users\User\Documents\abracadabra_rad_Studio\Unit1.cpp</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.514,=C:\Users\User\Documents\Embarcadero\Studio\Projects\Unit1.cpp</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.388,C:\Users\User\Documents\Embarcadero\Studio\Projects\Unit1.dfm=C:\Users\User\Documents\abracadabra_rad_Studio\Unit1.dfm</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.388,C:\Users\User\Documents\Embarcadero\Studio\Projects\Unit1.h=C:\Users\User\Documents\abracadabra_rad_Studio\Unit1.h</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.327,C:\Users\User\Documents\abracadabra_rad_Studio\Unit1.cpp=C:\Users\User\Documents\abracadabra_rad_Studio\main.cpp</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.155,=C:\Users\User\Documents\Embarcadero\Studio\Projects\Project1PCH1.h</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.388,C:\Users\User\Documents\Embarcadero\Studio\Projects\Project1PCH1.h=C:\Users\User\Documents\abracadabra_rad_Studio\my_ProjectPCH1.h</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.363,C:\Users\User\Documents\abracadabra_rad_Studio\my_Project.cbproj=C:\Users\User\Documents\abracadabra_rad_Studio\my_project.cbproj</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.327,C:\Users\User\Documents\abracadabra_rad_Studio\Unit1.dfm=C:\Users\User\Documents\abracadabra_rad_Studio\main.dfm</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.327,C:\Users\User\Documents\abracadabra_rad_Studio\Unit1.h=C:\Users\User\Documents\abracadabra_rad_Studio\main.h</Transaction>
+  </Transactions>
+</BorlandProject>
