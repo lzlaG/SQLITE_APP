@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>966</width>
-    <height>756</height>
+    <width>1132</width>
+    <height>846</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -27,10 +27,10 @@
    <widget class="QLabel" name="add_info">
     <property name="geometry">
      <rect>
-      <x>300</x>
-      <y>570</y>
-      <width>381</width>
-      <height>51</height>
+      <x>780</x>
+      <y>10</y>
+      <width>331</width>
+      <height>301</height>
      </rect>
     </property>
     <property name="text">
@@ -42,14 +42,14 @@
      <rect>
       <x>10</x>
       <y>330</y>
-      <width>191</width>
-      <height>181</height>
+      <width>181</width>
+      <height>129</height>
      </rect>
     </property>
     <property name="title">
      <string>Выберите тип контейнера:</string>
     </property>
-    <layout class="QFormLayout" name="formLayout">
+    <layout class="QGridLayout" name="gridLayout">
      <item row="0" column="0">
       <widget class="QCheckBox" name="ListCheckBox">
        <property name="text">
@@ -92,7 +92,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>966</width>
+     <width>1132</width>
      <height>23</height>
     </rect>
    </property>

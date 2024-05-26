@@ -31,10 +31,10 @@ void MainWindow::FillTree()
 void MainWindow::on_treeView_clicked(const QModelIndex &index)
 {
     QModelIndex SelectedIndex = ui->treeView->selectionModel()->currentIndex(); // берем выделенный индекс
-    QModelIndex HideData = model->index(SelectedIndex.row(),1); // получаем данные из нужного столбца по выделенному индексу
-    QModelIndex HideVisitCount = model->index(SelectedIndex.row(),4);
-    ui->add_info->setText("Дополнительная информация\nДата последнего посещения: "+HideData.data().toString()
-                          +"\nКоличество посещений: "+HideVisitCount.data().toString()); // задаем лейблу наш текст
+    QModelIndex HideHandPower = model->index(SelectedIndex.row(),1); // получаем данные из нужного столбца по выделенному индексу
+    QModelIndex HideLegPower = model->index(SelectedIndex.row(),2);
+    ui->add_info->setText("Дополнительная информация\nСила ног: "+HideLegPower.data().toString()
+                          +"\nСила рук: "+HideHandPower.data().toString()); // задаем лейблу наш текст
 }
 
 
