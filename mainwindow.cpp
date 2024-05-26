@@ -84,24 +84,36 @@ void MainWindow::on_DbCheckBox_clicked()
         ui->FillContainer->setEnabled(false);
     }
 }
-void ItogTask(Iterator<ScumPointer> *it)
+void MainWindow::WriteDataToTable(Iterator<ScumPointer> *it)
 {
+    model = new QStandardItemModel(this);
+    model->setColumnCount(4);
+    int i = 0;
     for(it->First(); !it->IsDone(); it->Next())
     {
         const ScumPointer currentMutant = it->GetCurrent();
-        QString ss;
-        qDebug() << "----------------------------------" << "\n";
-        qDebug() << ss.fromStdString(PrintMutantType(currentMutant->GetType())) << "\n";
-        qDebug() << ss.fromStdString(PrintHandPower(currentMutant->GetHandPower())) << "\n";
-        qDebug() << ss.fromStdString(PrintLegPower(currentMutant->GetLegPower())) << "\n";
-        qDebug() << ss.fromStdString(PrintAgeOfMutant(currentMutant->GetAgeOfMutant())) << "\n";
+        QString MS;
+        QStandardItem *typeofmutant = new QStandardItem(
+                    MS.fromStdString(PrintMutantType(currentMutant->GetType())));
+        QStandardItem *handpower = new QStandardItem(
+                    MS.fromStdString(PrintHandPower(currentMutant->GetHandPower())));
+        QStandardItem *legpower = new QStandardItem(
+                    MS.fromStdString(PrintLegPower(currentMutant->GetLegPower())));
+        QStandardItem *agemutant = new QStandardItem(
+                    MS.fromStdString(PrintAgeOfMutant(currentMutant->GetAgeOfMutant())));
+        model->setItem(i, 0, typeofmutant);
+        model->setItem(i, 1, handpower);
+        model->setItem(i, 2, legpower);
+        model->setItem(i, 3, agemutant);
+        i+=1;
     }
+    model->setHeaderData(0,Qt::Horizontal,"Тип мутанта");
+    model->setHeaderData(3,Qt::Horizontal,"Возраст мутанта");
 }
 void MainWindow::Create_Containers(int User_Choice)
 {
     Iterator<ScumPointer> *OurIterator;
     int random_amount_of_mutant = rand()%(100-10+1)+1;
-    cout << "Генерируем " << random_amount_of_mutant << " мутантов" << "\n";
     if (User_Choice == 1)
     {
         MutantContainer scumcell_list(random_amount_of_mutant);
@@ -111,7 +123,7 @@ void MainWindow::Create_Containers(int User_Choice)
         };
 
         OurIterator = scumcell_list.GetIterator();
-        ItogTask(OurIterator);
+        WriteDataToTable(OurIterator);
     };
     if(User_Choice == 2)
     {
@@ -121,7 +133,7 @@ void MainWindow::Create_Containers(int User_Choice)
             scumcell_vector.AddMutant(MutantFactory(MutantType(rand()%3)));
         };
         OurIterator = scumcell_vector.GetIterator();
-        ItogTask(OurIterator);
+        WriteDataToTable(OurIterator);
     };
     if(User_Choice == 3)
     {
@@ -134,12 +146,15 @@ void MainWindow::Create_Containers(int User_Choice)
             scumcell_sqlite.AddMutant(MutantFactory(MutantType(rand()%3)));
         };
         OurIterator = scumcell_sqlite.GetIterator();
-        ItogTask(OurIterator);
+        WriteDataToTable(OurIterator);
     };
 }
 
 void MainWindow::on_FillContainer_clicked()
 {
     Create_Containers(Container_User_Choice);
+    ui->treeView->setModel(model);
+    ui->treeView->hideColumn(1);
+    ui->treeView->hideColumn(2);
 }
 
