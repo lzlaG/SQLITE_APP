@@ -11,11 +11,15 @@ TEMPLATE = app
 
 SOURCES += \
     main.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+    mutants.cpp \
+    sqlite3.c
 
 HEADERS += \
     db.h \
-    mainwindow.h
+    mainwindow.h \
+    mutant.h \
+    sqlite3.h
 
 FORMS += \
     mainwindow.ui

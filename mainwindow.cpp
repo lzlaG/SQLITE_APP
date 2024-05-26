@@ -4,6 +4,7 @@
 #include <QtSql> // qt sql библиотека
 #include <QtGui>
 #include <QMessageBox>
+#include <QtWidgets>
 
 // структура для чтения данных
 struct NodeData
@@ -81,33 +82,6 @@ void MainWindow::FillTree()
     };*/
 };
 
-void MainWindow::on_pushButton_clicked() // задание действия для кнопки открытия бд
-{
-    QString fileName = QFileDialog::getOpenFileName(this,
-            tr("Выберите SQLITE базу данных"), "", tr("Chromium Databases (History*)")); // данная строка задает открытие диалогово окна с фильтром. Фильтр прописан чтобы показывались только файлы с расширением db
-    db = new DataBaseManager(); // указываем путь к бд
-    db->OpenDB(fileName); // открываем бд
-    QMessageBox msgBox; // создаем сообщение
-    if (db->IsOpen() && !fileName.isEmpty()) // проверка открытия базы
-    {
-        msgBox.setText("Успех! База данных открылась"); // задаем текст сообщения
-        msgBox.exec();
-        FillTree(); // заполняем данные
-        ui->treeView->setModel(model); // задаем модель данных
-        //скрываем ненужные столбцы
-        ui->treeView->hideColumn(0);
-        ui->treeView->hideColumn(1);
-        ui->treeView->hideColumn(4);
-        //отрисовываем treeview
-        ui->treeView->show();
-    }
-    else
-    {
-        msgBox.setText("Ошибка. База данных не открылась. Проверьте правильность пути и файла.");
-        msgBox.exec();
-    }
-}
-
 
 void MainWindow::on_treeView_clicked(const QModelIndex &index)
 {
@@ -120,14 +94,23 @@ void MainWindow::on_treeView_clicked(const QModelIndex &index)
 }
 
 
-void MainWindow::on_delete_button_clicked()
+
+void MainWindow::on_ListCheckBox_clicked()
 {
-    QModelIndex SelectedIndex = ui->treeView->selectionModel()->currentIndex();
-    QModelIndex HideId = model->index(SelectedIndex.row(),0);
-    db->DeleteRow(HideId.data().toString()); // удаляем строку из бд используя функцию из db manager
-    model->removeRow(SelectedIndex.row()); // удаляем узел
-    ui->treeView->update(); // обновляем представление
-    ui->add_info->setText(" "); // обновляем текст лейбла, так как запись удалилась
-    ui->delete_button->setDisabled(true); // возвращаем кнопку обратно в неактивное состояние
+    ui->VectorCheckBox->setChecked(false);
+    ui->DbCheckBox->setChecked(false);
+}
+
+void MainWindow::on_VectorCheckBox_clicked()
+{
+    ui->ListCheckBox->setChecked(false);
+    ui->DbCheckBox->setChecked(false);
+}
+
+
+void MainWindow::on_DbCheckBox_clicked()
+{
+    ui->ListCheckBox->setChecked(false);
+    ui->VectorCheckBox->setChecked(false);
 }
 

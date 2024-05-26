@@ -6,6 +6,7 @@
 #include <QtGui>
 #include <QSqlTableModel>
 #include "db.h"
+#include "mutant.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -21,11 +22,13 @@ public:
 
 // созданные слоты
 private slots:
-    void on_pushButton_clicked();
-
     void on_treeView_clicked(const QModelIndex &index);
 
-    void on_delete_button_clicked();
+    void on_ListCheckBox_clicked();
+
+    void on_VectorCheckBox_clicked();
+
+    void on_DbCheckBox_clicked();
 
 private:
     Ui::MainWindow *ui;
