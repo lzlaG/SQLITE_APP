@@ -30,11 +30,14 @@ private slots:
 
     void on_DbCheckBox_clicked();
 
+    void on_FillContainer_clicked();
+
 private:
     Ui::MainWindow *ui;
 protected:
     DataBaseManager *db; // бд
     void FillTree(); // функция для заполнения
     QStandardItemModel *model; //модель
+    int Container_User_Choice;
 };
 #endif // MAINWINDOW_H

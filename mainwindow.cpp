@@ -22,7 +22,7 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
     //делаем кнопку неактивной по умолчанию
-    ui->delete_button->setDisabled(true);
+    ui->FillContainer->setDisabled(true);
 }
 
 MainWindow::~MainWindow()
@@ -90,7 +90,6 @@ void MainWindow::on_treeView_clicked(const QModelIndex &index)
     QModelIndex HideVisitCount = model->index(SelectedIndex.row(),4);
     ui->add_info->setText("Дополнительная информация\nДата последнего посещения: "+HideData.data().toString()
                           +"\nКоличество посещений: "+HideVisitCount.data().toString()); // задаем лейблу наш текст
-    ui->delete_button->setDisabled(false); // активируем кнопку удаления записи
 }
 
 
@@ -99,12 +98,30 @@ void MainWindow::on_ListCheckBox_clicked()
 {
     ui->VectorCheckBox->setChecked(false);
     ui->DbCheckBox->setChecked(false);
+    if(ui->ListCheckBox->checkState())
+    {
+        ui->FillContainer->setEnabled(true);
+        Container_User_Choice = 1;
+    }
+    else
+    {
+        ui->FillContainer->setEnabled(false);
+    }
 }
 
 void MainWindow::on_VectorCheckBox_clicked()
 {
     ui->ListCheckBox->setChecked(false);
     ui->DbCheckBox->setChecked(false);
+    if(ui->VectorCheckBox->checkState())
+    {
+        ui->FillContainer->setEnabled(true);
+        Container_User_Choice = 2;
+    }
+    else
+    {
+        ui->FillContainer->setEnabled(false);
+    }
 }
 
 
@@ -112,5 +129,20 @@ void MainWindow::on_DbCheckBox_clicked()
 {
     ui->ListCheckBox->setChecked(false);
     ui->VectorCheckBox->setChecked(false);
+    if(ui->DbCheckBox->checkState())
+    {
+        ui->FillContainer->setEnabled(true);
+        Container_User_Choice = 3;
+    }
+    else
+    {
+        ui->FillContainer->setEnabled(false);
+    }
+}
+
+
+void MainWindow::on_FillContainer_clicked()
+{
+
 }
 

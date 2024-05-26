@@ -37,19 +37,6 @@
      <string/>
     </property>
    </widget>
-   <widget class="QPushButton" name="delete_button">
-    <property name="geometry">
-     <rect>
-      <x>630</x>
-      <y>450</y>
-      <width>251</width>
-      <height>31</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Удалить запись</string>
-    </property>
-   </widget>
    <widget class="QGroupBox" name="ContainerChooseGroup">
     <property name="geometry">
      <rect>
@@ -86,6 +73,19 @@
      </item>
     </layout>
    </widget>
+   <widget class="QPushButton" name="FillContainer">
+    <property name="geometry">
+     <rect>
+      <x>490</x>
+      <y>340</y>
+      <width>281</width>
+      <height>111</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Вывести данные с контейнера</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
@@ -100,5 +100,22 @@
   <widget class="QStatusBar" name="statusbar"/>
  </widget>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>ListCheckBox</sender>
+   <signal>stateChanged(int)</signal>
+   <receiver>FillContainer</receiver>
+   <slot>toggle()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>63</x>
+     <y>418</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>497</x>
+     <y>419</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
 </ui>
