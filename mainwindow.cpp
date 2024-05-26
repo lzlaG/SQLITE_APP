@@ -5,16 +5,7 @@
 #include <QtGui>
 #include <QMessageBox>
 #include <QtWidgets>
-
-// структура для чтения данных
-struct NodeData
-{
-    QString id;
-    QString date;
-    QString url;
-    QString title;
-    QString visit_count;
-};
+#include <QDebug>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -32,54 +23,8 @@ MainWindow::~MainWindow()
 
 void MainWindow::FillTree()
 {
-    QSqlQuery query("SELECT id,datetime(last_visit_time / 1000000 - 11644473600, 'unixepoch', 'localtime'),url,title,visit_count FROM urls;");
-    if (!query.exec()) {
-        qWarning() << "Не удалось выполнить запрос"; // проверяем правильность запроса
-        return;
-    };
     model = new QStandardItemModel(this); // инициализируем новую модель
-    model->setColumnCount(5); // устанавливаем количество колонок
-    int i = 0; // указатель строк
-    while(query.next())
-    {
-        // читаем данные в структуру из sql запроса
-        NodeData OurData;
-        OurData.id = query.value(0).toString();
-        OurData.date = query.value(1).toString();
-        OurData.url = query.value(2).toString();
-        OurData.title = query.value(3).toString();
-        OurData.visit_count = query.value(4).toString();
-
-        // здаем данные для узла
-        QStandardItem *qid = new QStandardItem(OurData.id);
-        QStandardItem *qday = new QStandardItem(OurData.date);
-        QStandardItem *qurl = new QStandardItem(OurData.url);
-        QStandardItem *qtitle = new QStandardItem(OurData.title);
-        QStandardItem *qvisit_count = new QStandardItem(OurData.visit_count);
-
-        //привязываем данные для корневого узла
-        // при каждой новой итерации цикла создается новый корневой узел
-        model->setItem(i, 0,qid);
-        model->setItem(i, 1, qday);
-        model->setItem(i, 2, qurl);
-        model->setItem(i, 3, qtitle);
-        model->setItem(i, 4, qvisit_count);
-        i+=1; //смещаем указатель строки
-    }
-    // устанавливаем заголовки нужных столбцов
-    model->setHeaderData(2,Qt::Horizontal,"URL");
-    model->setHeaderData(3,Qt::Horizontal,"Title");
-
-    //расскоментировать блок ниже если интересен тест с большим количеством записей
-    // при этом блок ввыше с sql закомментировать
-    /*
-    for (int i=0; i<1000000; i++)
-    {
-        QStandardItem *item1 = new QStandardItem(QString("Столбец 1, строка %1").arg(i));
-        QStandardItem *item2 = new QStandardItem(QString("Столбец 2, строка %1").arg(i));
-        model->setItem(i, 0, item1);
-        model->setItem(i, 1, item2);
-    };*/
+    model->setColumnCount(5);
 };
 
 
@@ -139,10 +84,61 @@ void MainWindow::on_DbCheckBox_clicked()
         ui->FillContainer->setEnabled(false);
     }
 }
+void ItogTask(Iterator<ScumPointer> *it)
+{
+    for(it->First(); !it->IsDone(); it->Next())
+    {
+        const ScumPointer currentMutant = it->GetCurrent();
+        QString ss;
+        qDebug() << "----------------------------------" << "\n";
+        qDebug() << ss.fromStdString(PrintMutantType(currentMutant->GetType())) << "\n";
+        qDebug() << ss.fromStdString(PrintHandPower(currentMutant->GetHandPower())) << "\n";
+        qDebug() << ss.fromStdString(PrintLegPower(currentMutant->GetLegPower())) << "\n";
+        qDebug() << ss.fromStdString(PrintAgeOfMutant(currentMutant->GetAgeOfMutant())) << "\n";
+    }
+}
+void MainWindow::Create_Containers(int User_Choice)
+{
+    Iterator<ScumPointer> *OurIterator;
+    int random_amount_of_mutant = rand()%(100-10+1)+1;
+    cout << "Генерируем " << random_amount_of_mutant << " мутантов" << "\n";
+    if (User_Choice == 1)
+    {
+        MutantContainer scumcell_list(random_amount_of_mutant);
+        for(int i=0; i<random_amount_of_mutant; i++)
+        {
+            scumcell_list.AddMutant(MutantFactory(MutantType(rand()%3)));
+        };
 
+        OurIterator = scumcell_list.GetIterator();
+        ItogTask(OurIterator);
+    };
+    if(User_Choice == 2)
+    {
+        WildMutantContainer scumcell_vector;
+        for(int i=0; i<random_amount_of_mutant; i++)
+        {
+            scumcell_vector.AddMutant(MutantFactory(MutantType(rand()%3)));
+        };
+        OurIterator = scumcell_vector.GetIterator();
+        ItogTask(OurIterator);
+    };
+    /*
+    if(User_Choice == 3)
+    {
+        UltraWildMutantContainer scumcell_sqlite(path_to_db);
+        scumcell_sqlite.ClearDB();
+        for(int i=0; i<random_amount_of_mutant; i++)
+        {
+            scumcell_sqlite.AddMutant(MutantFactory(MutantType(rand()%3)));
+        };
+        OurIterator = scumcell_sqlite.GetIterator();
+        ItogTask(OurIterator);
+    };*/
+}
 
 void MainWindow::on_FillContainer_clicked()
 {
-
+    Create_Containers(Container_User_Choice);
 }
 

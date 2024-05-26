@@ -122,7 +122,7 @@ class WildMutantContainerIterator : public Iterator<ScumPointer>
         }
         void First() { it = ScumCell->begin();}
         void Next() {it++;}
-        bool IsDone() const {return it == ScumCell->end();}
+        bool IsDone() const {return it >= ScumCell->end();}
         ScumPointer GetCurrent() {return *it;}
 };
 
@@ -302,4 +302,8 @@ class DecoratorType : public Decorator<ScumPointer>
         }
 };
 Scum *MutantFactory(MutantType newMutant);
+string PrintHandPower (const StregthOfHands type);
+string PrintAgeOfMutant(const Age type);
+string PrintMutantType(const MutantType type);
+string PrintLegPower (const StregthOfLegs type);
 #endif ScumH

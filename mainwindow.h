@@ -39,5 +39,6 @@ protected:
     void FillTree(); // функция для заполнения
     QStandardItemModel *model; //модель
     int Container_User_Choice;
+    void Create_Containers(int User_Choice);
 };
 #endif // MAINWINDOW_H
