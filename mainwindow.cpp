@@ -123,10 +123,11 @@ void MainWindow::Create_Containers(int User_Choice)
         OurIterator = scumcell_vector.GetIterator();
         ItogTask(OurIterator);
     };
-    /*
     if(User_Choice == 3)
     {
-        UltraWildMutantContainer scumcell_sqlite(path_to_db);
+        QString fileName = QFileDialog::getOpenFileName(this,
+                    tr("Выберите SQLITE базу данных"), "", tr("SQLITE3 Databases (*.db)"));
+        UltraWildMutantContainer scumcell_sqlite(fileName.toStdString());
         scumcell_sqlite.ClearDB();
         for(int i=0; i<random_amount_of_mutant; i++)
         {
@@ -134,7 +135,7 @@ void MainWindow::Create_Containers(int User_Choice)
         };
         OurIterator = scumcell_sqlite.GetIterator();
         ItogTask(OurIterator);
-    };*/
+    };
 }
 
 void MainWindow::on_FillContainer_clicked()
