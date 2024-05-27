@@ -125,6 +125,40 @@ void MainWindow::on_One_Thread_Button_clicked()
 
     connect(&Thread_1, &QThread::started, &Object_1, &WriteObject::run);
     connect(&Object_1, &WriteObject::finished, &Thread_1, &QThread::terminate);
+    Object_1.moveToThread(&Thread_1);
+
+    Object_1.setModel(model);
+    Object_1.setUserChoice(Container_User_Choice);
+    Object_1.setStartAndAmount(0, 100);
+
+
+    Thread_1.start();
+
+    ui->treeView->setModel(model);
+    //qDebug() << ui->treeView->model()->rowCount();
+    ui->treeView->hideColumn(1);
+    ui->treeView->hideColumn(2);
+}
+
+
+void MainWindow::on_Two_Thread_Button_clicked()
+{
+    if (Container_User_Choice == 3)
+    {
+        QString FileName = QFileDialog::getOpenFileName(this,
+                    tr("Выберите SQLITE базу данных"), "", tr("SQLITE3 Databases (*.db)"));
+        Object_1.setPathToDB(FileName);
+        Object_2.setPathToDB(FileName);
+    }
+    model = new QStandardItemModel(this);
+
+    model->setColumnCount(4);
+
+    model->setHeaderData(0,Qt::Horizontal,"Тип мутанта");
+    model->setHeaderData(3,Qt::Horizontal,"Возраст мутанта");
+
+    connect(&Thread_1, &QThread::started, &Object_1, &WriteObject::run);
+    connect(&Object_1, &WriteObject::finished, &Thread_1, &QThread::terminate);
 
     connect(&Thread_2, &QThread::started, &Object_2, &WriteObject::run);
     connect(&Object_2, &WriteObject::finished, &Thread_2, &QThread::terminate);

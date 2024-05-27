@@ -36,6 +36,8 @@ private slots:
 
     void on_One_Thread_Button_clicked();
 
+    void on_Two_Thread_Button_clicked();
+
     void on_debug_clicked();
 
 private:

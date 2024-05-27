@@ -99,13 +99,26 @@
      <string>Выполнить с 1 потоком</string>
     </property>
    </widget>
+   <widget class="QPushButton" name="Two_Thread_Button">
+    <property name="geometry">
+     <rect>
+      <x>570</x>
+      <y>460</y>
+      <width>201</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Выполнить с 2 потоками</string>
+    </property>
+   </widget>
    <widget class="QPushButton" name="debug">
     <property name="geometry">
      <rect>
-      <x>580</x>
-      <y>540</y>
-      <width>241</width>
-      <height>91</height>
+      <x>340</x>
+      <y>620</y>
+      <width>501</width>
+      <height>111</height>
      </rect>
     </property>
     <property name="text">
