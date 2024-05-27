@@ -99,6 +99,19 @@
      <string>Выполнить с 1 потоком</string>
     </property>
    </widget>
+   <widget class="QPushButton" name="debug">
+    <property name="geometry">
+     <rect>
+      <x>580</x>
+      <y>540</y>
+      <width>241</width>
+      <height>91</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>PushButton</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">

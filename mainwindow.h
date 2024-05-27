@@ -36,6 +36,8 @@ private slots:
 
     void on_One_Thread_Button_clicked();
 
+    void on_debug_clicked();
+
 private:
     Ui::MainWindow *ui;
 protected:
@@ -46,6 +48,8 @@ protected:
     //void WriteDataToTable(Iterator<ScumPointer> *it);
     //void Create_Containers(int User_Choice);
     QThread Thread_1;
+    QThread Thread_2;
     WriteObject Object_1;
+    WriteObject Object_2;
 };
 #endif // MAINWINDOW_H

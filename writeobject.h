@@ -11,11 +11,13 @@
 class WriteObject : public QObject
 {
     Q_OBJECT
-    bool m_running;
+    bool m_running = true;
     int count;
     QStandardItemModel *Model;
     int UserChoice;
     QString Path;
+    int StartRow;
+    int AmountOfRow;
 public:
     explicit WriteObject(QObject *parent = nullptr);
     bool running() const;
@@ -27,10 +29,10 @@ signals:
     void runningChanged(bool running);
 public slots:
     void run(); // Метод с полезной нагрузкой, который может выполняться в цикле
-    void setRunning(bool running);
     void setModel(QStandardItemModel *model);
     void setUserChoice(int userchoice);
     void setPathToDB(QString path);
+    void setStartAndAmount(int startrow, int amountofrow);
 };
 
 #endif // WRITEOBJECT_H

@@ -11,8 +11,7 @@ WriteObject::WriteObject(QObject *parent)
 }
 void WriteObject::WriteDataToTable(Iterator<ScumPointer> *it)
 {
-    Model->setColumnCount(4);
-    int i = 0;
+    int i = StartRow;
     for(it->First(); !it->IsDone(); it->Next())
     {
         QThread::msleep(30); //время которое тратим на обработку одного объекта
@@ -30,17 +29,15 @@ void WriteObject::WriteDataToTable(Iterator<ScumPointer> *it)
         Model->setItem(i, 1, handpower);
         Model->setItem(i, 2, legpower);
         Model->setItem(i, 3, agemutant);
+        qDebug() << i;
         i+=1;
     }
-    Model->setHeaderData(0,Qt::Horizontal,"Тип мутанта");
-    Model->setHeaderData(3,Qt::Horizontal,"Возраст мутанта");
-
 }
 
 void WriteObject::Create_Containers()
 {
     Iterator<ScumPointer> *OurIterator;
-    int random_amount_of_mutant = 1000;
+    int random_amount_of_mutant = AmountOfRow;
     if (UserChoice == 1)
     {
         MutantContainer scumcell_list(random_amount_of_mutant);
@@ -90,16 +87,8 @@ void WriteObject::run()
     Create_Containers();
     count++;
     qDebug() << timer.elapsed();
+    m_running = false;
     emit finished();
-}
-
-void WriteObject::setRunning(bool running)
-{
-    if (m_running == running)
-        return;
-
-    m_running = running;
-    emit runningChanged(running);
 }
 
 void WriteObject::setModel(QStandardItemModel *model)
@@ -116,3 +105,9 @@ void WriteObject::setPathToDB(QString path)
 {
     Path = path;
 };
+
+void WriteObject::setStartAndAmount(int startrow, int amountofrow)
+{
+    StartRow = startrow;
+    AmountOfRow = amountofrow;
+}
