@@ -27,6 +27,7 @@ public:
 signals:
     void finished();
     void runningChanged(bool running);
+    void UpdateProgressBar(int Value);
 public slots:
     void run(); // Метод с полезной нагрузкой, который может выполняться в цикле
     void setModel(QStandardItemModel *model);

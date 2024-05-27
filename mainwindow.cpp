@@ -14,8 +14,10 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
     //делаем кнопку неактивной по умолчанию
-
-
+    ui->progressBar->setValue(0);
+    ui->progressBar->setRange(0,100);
+    connect(&Object_1, SIGNAL(UpdateProgressBar(int)), ui->progressBar, SLOT(setValue(int)));
+    connect(&Object_2, SIGNAL(UpdateProgressBar(int)), ui->progressBar, SLOT(setValue(int)));
 }
 
 
@@ -100,6 +102,7 @@ void MainWindow::on_No_Thread_Button_clicked()
     model = new QStandardItemModel(this);
     Object_1.setModel(model);
     Object_1.setUserChoice(Container_User_Choice);
+    Object_1.setStartAndAmount(0, 200);
     Object_1.run();
 
     ui->treeView->setModel(model);
@@ -129,7 +132,7 @@ void MainWindow::on_One_Thread_Button_clicked()
 
     Object_1.setModel(model);
     Object_1.setUserChoice(Container_User_Choice);
-    Object_1.setStartAndAmount(0, 100);
+    Object_1.setStartAndAmount(0, 200);
 
 
     Thread_1.start();

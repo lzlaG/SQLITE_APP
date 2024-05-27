@@ -29,6 +29,7 @@ void WriteObject::WriteDataToTable(Iterator<ScumPointer> *it)
         Model->setItem(i, 1, handpower);
         Model->setItem(i, 2, legpower);
         Model->setItem(i, 3, agemutant);
+        emit UpdateProgressBar(i);
         qDebug() << i;
         i+=1;
     }
