@@ -14,7 +14,12 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
     //делаем кнопку неактивной по умолчанию
     ui->FillContainer->setDisabled(true);
+    connect(&Thread_1, &QThread::started, &Object_1, &WriteObject::run);
+    connect(&Object_1, &WriteObject::finished, &Thread_1, &QThread::terminate);
+    Object_1.moveToThread(&Thread_1);
+
 }
+
 
 MainWindow::~MainWindow()
 {
@@ -84,75 +89,22 @@ void MainWindow::on_DbCheckBox_clicked()
         ui->FillContainer->setEnabled(false);
     }
 }
-void MainWindow::WriteDataToTable(Iterator<ScumPointer> *it)
-{
-    model = new QStandardItemModel(this);
-    model->setColumnCount(4);
-    int i = 0;
-    for(it->First(); !it->IsDone(); it->Next())
-    {
-        const ScumPointer currentMutant = it->GetCurrent();
-        QString MS;
-        QStandardItem *typeofmutant = new QStandardItem(
-                    MS.fromStdString(PrintMutantType(currentMutant->GetType())));
-        QStandardItem *handpower = new QStandardItem(
-                    MS.fromStdString(PrintHandPower(currentMutant->GetHandPower())));
-        QStandardItem *legpower = new QStandardItem(
-                    MS.fromStdString(PrintLegPower(currentMutant->GetLegPower())));
-        QStandardItem *agemutant = new QStandardItem(
-                    MS.fromStdString(PrintAgeOfMutant(currentMutant->GetAgeOfMutant())));
-        model->setItem(i, 0, typeofmutant);
-        model->setItem(i, 1, handpower);
-        model->setItem(i, 2, legpower);
-        model->setItem(i, 3, agemutant);
-        i+=1;
-    }
-    model->setHeaderData(0,Qt::Horizontal,"Тип мутанта");
-    model->setHeaderData(3,Qt::Horizontal,"Возраст мутанта");
-}
-void MainWindow::Create_Containers(int User_Choice)
-{
-    Iterator<ScumPointer> *OurIterator;
-    int random_amount_of_mutant = rand()%(100-10+1)+1;
-    if (User_Choice == 1)
-    {
-        MutantContainer scumcell_list(random_amount_of_mutant);
-        for(int i=0; i<random_amount_of_mutant; i++)
-        {
-            scumcell_list.AddMutant(MutantFactory(MutantType(rand()%3)));
-        };
 
-        OurIterator = scumcell_list.GetIterator();
-        WriteDataToTable(OurIterator);
-    };
-    if(User_Choice == 2)
-    {
-        WildMutantContainer scumcell_vector;
-        for(int i=0; i<random_amount_of_mutant; i++)
-        {
-            scumcell_vector.AddMutant(MutantFactory(MutantType(rand()%3)));
-        };
-        OurIterator = scumcell_vector.GetIterator();
-        WriteDataToTable(OurIterator);
-    };
-    if(User_Choice == 3)
-    {
-        QString fileName = QFileDialog::getOpenFileName(this,
-                    tr("Выберите SQLITE базу данных"), "", tr("SQLITE3 Databases (*.db)"));
-        UltraWildMutantContainer scumcell_sqlite(fileName.toStdString());
-        scumcell_sqlite.ClearDB();
-        for(int i=0; i<random_amount_of_mutant; i++)
-        {
-            scumcell_sqlite.AddMutant(MutantFactory(MutantType(rand()%3)));
-        };
-        OurIterator = scumcell_sqlite.GetIterator();
-        WriteDataToTable(OurIterator);
-    };
-}
 
 void MainWindow::on_FillContainer_clicked()
 {
-    Create_Containers(Container_User_Choice);
+    //Create_Containers(Container_User_Choice);
+
+    //QString fileName = QFileDialog::getOpenFileName(this,
+    //            tr("Выберите SQLITE базу данных"), "", tr("SQLITE3 Databases (*.db)"));
+
+    model = new QStandardItemModel(this);
+
+    Object_1.setModel(model);
+    Object_1.setUserChoice(Container_User_Choice);
+
+    Thread_1.start();
+
     ui->treeView->setModel(model);
     ui->treeView->hideColumn(1);
     ui->treeView->hideColumn(2);

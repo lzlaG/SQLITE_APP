@@ -7,6 +7,8 @@
 #include <QSqlTableModel>
 #include "db.h"
 #include "mutant.h"
+#include <QThread>
+#include "writeobject.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -39,7 +41,10 @@ protected:
     void FillTree(); // функция для заполнения
     QStandardItemModel *model; //модель
     int Container_User_Choice;
-    void WriteDataToTable(Iterator<ScumPointer> *it);
-    void Create_Containers(int User_Choice);
+    //void WriteDataToTable(Iterator<ScumPointer> *it);
+    //void Create_Containers(int User_Choice);
+    QThread Thread_1;
+    WriteObject Object_1;
+
 };
 #endif // MAINWINDOW_H

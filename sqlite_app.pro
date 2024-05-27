@@ -13,13 +13,15 @@ SOURCES += \
     main.cpp \
     mainwindow.cpp \
     mutants.cpp \
-    sqlite3.c
+    sqlite3.c \
+    writeobject.cpp
 
 HEADERS += \
     db.h \
     mainwindow.h \
     mutant.h \
-    sqlite3.h
+    sqlite3.h \
+    writeobject.h
 
 FORMS += \
     mainwindow.ui
