@@ -9,6 +9,23 @@ WriteObject::WriteObject(QObject *parent)
 {
 
 }
+
+QString timeElapsedToString(qint64 elapsed)
+{
+    int milliseconds = elapsed % 1000;
+    elapsed /= 1000;
+    int seconds = elapsed % 60;
+    elapsed /= 60;
+    int minutes = elapsed % 60;
+    elapsed /= 60;
+    int hours = elapsed;
+    return QString("%1:%2:%3.%4")
+            .arg(hours, 2, 10, QChar('0'))
+            .arg(minutes, 2, 10, QChar('0'))
+            .arg(seconds, 2, 10, QChar('0'))
+            .arg(milliseconds, 3, 10, QChar('0'));
+}
+
 void WriteObject::WriteDataToTable(Iterator<ScumPointer> *it)
 {
     int i = StartRow;
@@ -30,7 +47,7 @@ void WriteObject::WriteDataToTable(Iterator<ScumPointer> *it)
         Model->setItem(i, 2, legpower);
         Model->setItem(i, 3, agemutant);
         emit UpdateProgressBar(i);
-        qDebug() << i;
+        //qDebug() << i;
         i+=1;
     }
 }
@@ -86,10 +103,11 @@ void WriteObject::run()
     QElapsedTimer timer;
     timer.start();
     Create_Containers();
-    count++;
     qDebug() << timer.elapsed();
-    m_running = false;
+    TimeSpended = "Времени потрачено на операцию: \n"+timeElapsedToString(timer.elapsed());
+    emit UpdateLabel(TimeSpended);
     emit finished();
+    m_running = false;
 }
 
 void WriteObject::setModel(QStandardItemModel *model)

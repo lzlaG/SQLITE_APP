@@ -17,7 +17,10 @@ MainWindow::MainWindow(QWidget *parent)
     ui->progressBar->setValue(0);
     ui->progressBar->setRange(0,100);
     connect(&Object_1, SIGNAL(UpdateProgressBar(int)), ui->progressBar, SLOT(setValue(int)));
-    connect(&Object_2, SIGNAL(UpdateProgressBar(int)), ui->progressBar, SLOT(setValue(int)));
+    connect(&Object_1, SIGNAL(UpdateLabel(QString)), ui->time_label, SLOT(setText(QString)));
+    //connect(&Object_2, SIGNAL(UpdateProgressBar(int)), ui->progressBar, SLOT(setValue(int)));
+
+
 }
 
 
@@ -185,10 +188,3 @@ void MainWindow::on_Two_Thread_Button_clicked()
     ui->treeView->hideColumn(1);
     ui->treeView->hideColumn(2);
 }
-
-
-void MainWindow::on_debug_clicked()
-{
-    qDebug() << ui->treeView->model()->rowCount();
-}
-

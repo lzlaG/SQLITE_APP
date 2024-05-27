@@ -18,6 +18,7 @@ class WriteObject : public QObject
     QString Path;
     int StartRow;
     int AmountOfRow;
+    QString TimeSpended;
 public:
     explicit WriteObject(QObject *parent = nullptr);
     bool running() const;
@@ -28,6 +29,7 @@ signals:
     void finished();
     void runningChanged(bool running);
     void UpdateProgressBar(int Value);
+    void UpdateLabel(QString value);
 public slots:
     void run(); // Метод с полезной нагрузкой, который может выполняться в цикле
     void setModel(QStandardItemModel *model);
