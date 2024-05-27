@@ -1,7 +1,9 @@
 #include "writeobject.h"
 #include "mutant.h"
 #include <QStandardItemModel>
-
+#include <QElapsedTimer>
+#include <QDebug>
+#include <QThread>
 WriteObject::WriteObject(QObject *parent)
     : QObject{parent}
 {
@@ -13,6 +15,7 @@ void WriteObject::WriteDataToTable(Iterator<ScumPointer> *it)
     int i = 0;
     for(it->First(); !it->IsDone(); it->Next())
     {
+        QThread::msleep(30); //время которое тратим на обработку одного объекта
         const ScumPointer currentMutant = it->GetCurrent();
         QString MS;
         QStandardItem *typeofmutant = new QStandardItem(
@@ -34,10 +37,10 @@ void WriteObject::WriteDataToTable(Iterator<ScumPointer> *it)
 
 }
 
-void WriteObject::Create_Containers(int UserChoice)
+void WriteObject::Create_Containers()
 {
     Iterator<ScumPointer> *OurIterator;
-    int random_amount_of_mutant = 10000;
+    int random_amount_of_mutant = 1000;
     if (UserChoice == 1)
     {
         MutantContainer scumcell_list(random_amount_of_mutant);
@@ -82,9 +85,11 @@ void WriteObject::run()
     count = 0;
     // Переменная m_running отвечает за работу объекта в потоке.
     // При значении false работа завершается
-    Create_Containers(UserChoice);
+    QElapsedTimer timer;
+    timer.start();
+    Create_Containers();
     count++;
-    qDebug() << count;
+    qDebug() << timer.elapsed();
     emit finished();
 }
 

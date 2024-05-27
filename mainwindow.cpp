@@ -1,5 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include "writeobject.h"
 #include <QFileDialog> // обязательно для подключения, так как без него не будет работать выбор файла
 #include <QtSql> // qt sql библиотека
 #include <QtGui>
@@ -13,10 +14,9 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
     //делаем кнопку неактивной по умолчанию
-    ui->FillContainer->setDisabled(true);
-    connect(&Thread_1, &QThread::started, &Object_1, &WriteObject::run);
-    connect(&Object_1, &WriteObject::finished, &Thread_1, &QThread::terminate);
-    Object_1.moveToThread(&Thread_1);
+    //connect(&Thread_1, &QThread::started, &Object_1, &WriteObject::run);
+    //connect(&Object_1, &WriteObject::finished, &Thread_1, &QThread::terminate);
+    //Object_1.moveToThread(&Thread_1);
 
 }
 
@@ -50,12 +50,12 @@ void MainWindow::on_ListCheckBox_clicked()
     ui->DbCheckBox->setChecked(false);
     if(ui->ListCheckBox->checkState())
     {
-        ui->FillContainer->setEnabled(true);
+        //ui->FillContainer->setEnabled(true);
         Container_User_Choice = 1;
     }
     else
     {
-        ui->FillContainer->setEnabled(false);
+        //ui->FillContainer->setEnabled(false);
     }
 }
 
@@ -65,12 +65,12 @@ void MainWindow::on_VectorCheckBox_clicked()
     ui->DbCheckBox->setChecked(false);
     if(ui->VectorCheckBox->checkState())
     {
-        ui->FillContainer->setEnabled(true);
+        //ui->FillContainer->setEnabled(true);
         Container_User_Choice = 2;
     }
     else
     {
-        ui->FillContainer->setEnabled(false);
+        //ui->FillContainer->setEnabled(false);
     }
 }
 
@@ -81,32 +81,22 @@ void MainWindow::on_DbCheckBox_clicked()
     ui->VectorCheckBox->setChecked(false);
     if(ui->DbCheckBox->checkState())
     {
-        ui->FillContainer->setEnabled(true);
+        //ui->FillContainer->setEnabled(true);
         Container_User_Choice = 3;
     }
     else
     {
-        ui->FillContainer->setEnabled(false);
+        //ui->FillContainer->setEnabled(false);
     }
 }
 
 
-void MainWindow::on_FillContainer_clicked()
+void MainWindow::on_No_Thread_Button_clicked()
 {
-    //Create_Containers(Container_User_Choice);
-
-    //QString fileName = QFileDialog::getOpenFileName(this,
-    //            tr("Выберите SQLITE базу данных"), "", tr("SQLITE3 Databases (*.db)"));
-
     model = new QStandardItemModel(this);
-
     Object_1.setModel(model);
     Object_1.setUserChoice(Container_User_Choice);
-
-    Thread_1.start();
-
+    Object_1.run();
     ui->treeView->setModel(model);
-    ui->treeView->hideColumn(1);
-    ui->treeView->hideColumn(2);
 }
 

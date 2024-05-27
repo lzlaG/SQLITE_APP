@@ -32,7 +32,7 @@ private slots:
 
     void on_DbCheckBox_clicked();
 
-    void on_FillContainer_clicked();
+    void on_No_Thread_Button_clicked();
 
 private:
     Ui::MainWindow *ui;
@@ -45,6 +45,5 @@ protected:
     //void Create_Containers(int User_Choice);
     QThread Thread_1;
     WriteObject Object_1;
-
 };
 #endif // MAINWINDOW_H

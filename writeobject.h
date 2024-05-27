@@ -20,7 +20,7 @@ public:
     explicit WriteObject(QObject *parent = nullptr);
     bool running() const;
     void WriteDataToTable(Iterator<ScumPointer> *it);
-    void Create_Containers(int User_Choice);
+    void Create_Containers();
 
 signals:
     void finished();

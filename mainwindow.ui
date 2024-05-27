@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1132</width>
-    <height>846</height>
+    <width>1006</width>
+    <height>845</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -29,7 +29,7 @@
      <rect>
       <x>780</x>
       <y>10</y>
-      <width>331</width>
+      <width>201</width>
       <height>301</height>
      </rect>
     </property>
@@ -73,17 +73,17 @@
      </item>
     </layout>
    </widget>
-   <widget class="QPushButton" name="FillContainer">
+   <widget class="QPushButton" name="No_Thread_Button">
     <property name="geometry">
      <rect>
-      <x>490</x>
+      <x>569</x>
       <y>340</y>
-      <width>281</width>
-      <height>111</height>
+      <width>201</width>
+      <height>51</height>
      </rect>
     </property>
     <property name="text">
-     <string>Вывести данные с контейнера</string>
+     <string>Выполнить без потоков</string>
     </property>
    </widget>
   </widget>
@@ -92,7 +92,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1132</width>
+     <width>1006</width>
      <height>23</height>
     </rect>
    </property>
@@ -100,22 +100,5 @@
   <widget class="QStatusBar" name="statusbar"/>
  </widget>
  <resources/>
- <connections>
-  <connection>
-   <sender>ListCheckBox</sender>
-   <signal>stateChanged(int)</signal>
-   <receiver>FillContainer</receiver>
-   <slot>toggle()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>63</x>
-     <y>418</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>497</x>
-     <y>419</y>
-    </hint>
-   </hints>
-  </connection>
- </connections>
+ <connections/>
 </ui>
