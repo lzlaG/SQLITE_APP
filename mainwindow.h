@@ -34,6 +34,8 @@ private slots:
 
     void on_No_Thread_Button_clicked();
 
+    void on_One_Thread_Button_clicked();
+
 private:
     Ui::MainWindow *ui;
 protected:

@@ -14,9 +14,7 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
     //делаем кнопку неактивной по умолчанию
-    //connect(&Thread_1, &QThread::started, &Object_1, &WriteObject::run);
-    //connect(&Object_1, &WriteObject::finished, &Thread_1, &QThread::terminate);
-    //Object_1.moveToThread(&Thread_1);
+
 
 }
 
@@ -98,5 +96,28 @@ void MainWindow::on_No_Thread_Button_clicked()
     Object_1.setUserChoice(Container_User_Choice);
     Object_1.run();
     ui->treeView->setModel(model);
+}
+
+
+void MainWindow::on_One_Thread_Button_clicked()
+{
+    model = new QStandardItemModel(this);
+
+    connect(&Thread_1, &QThread::started, &Object_1, &WriteObject::run);
+    connect(&Object_1, &WriteObject::finished, &Thread_1, &QThread::terminate);
+    Object_1.moveToThread(&Thread_1);
+
+    Object_1.setModel(model);
+    Object_1.setUserChoice(Container_User_Choice);
+
+    Thread_1.start();
+
+    ui->treeView->setModel(model);
+    ui->treeView->hideColumn(1);
+    ui->treeView->hideColumn(2);
+
+
+    //QString fileName = QFileDialog::getOpenFileName(this,
+    //            tr("Выберите SQLITE базу данных"), "", tr("SQLITE3 Databases (*.db)"));
 }
 

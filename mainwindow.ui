@@ -86,6 +86,19 @@
      <string>Выполнить без потоков</string>
     </property>
    </widget>
+   <widget class="QPushButton" name="One_Thread_Button">
+    <property name="geometry">
+     <rect>
+      <x>570</x>
+      <y>400</y>
+      <width>201</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Выполнить с 1 потоком</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
