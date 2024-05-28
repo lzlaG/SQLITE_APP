@@ -9,7 +9,7 @@ WriteObject::WriteObject(QObject *parent)
 {
 
 }
-
+// функция для форматирования времени
 QString timeElapsedToString(qint64 elapsed)
 {
     int milliseconds = elapsed % 1000;
@@ -25,7 +25,7 @@ QString timeElapsedToString(qint64 elapsed)
             .arg(seconds, 2, 10, QChar('0'))
             .arg(milliseconds, 3, 10, QChar('0'));
 }
-
+//функция записи данных
 void WriteObject::WriteDataToTable(Iterator<ScumPointer> *it)
 {
     int i = StartRow;
@@ -47,11 +47,11 @@ void WriteObject::WriteDataToTable(Iterator<ScumPointer> *it)
         Model->setItem(i, 2, legpower);
         Model->setItem(i, 3, agemutant);
         emit UpdateProgressBar(i);
-        //qDebug() << i;
         i+=1;
     }
 }
 
+// функция чтения данных
 void WriteObject::Create_Containers()
 {
     Iterator<ScumPointer> *OurIterator;
@@ -90,24 +90,15 @@ void WriteObject::Create_Containers()
     };
 }
 
-bool WriteObject::running() const
-{
-    return m_running;
-}
-
+//функция где выполняется все необходимое
 void WriteObject::run()
 {
-    count = 0;
-    // Переменная m_running отвечает за работу объекта в потоке.
-    // При значении false работа завершается
     QElapsedTimer timer;
     timer.start();
     Create_Containers();
-    qDebug() << timer.elapsed();
     TimeSpended = "Времени потрачено на операцию: \n"+timeElapsedToString(timer.elapsed());
-    emit UpdateLabel(TimeSpended);
-    emit finished();
-    m_running = false;
+    emit UpdateLabel(TimeSpended); // издаем сигнал об обновлении текстового лейбла
+    emit finished(); // издаем сигнал о завершении работы
 }
 
 void WriteObject::setModel(QStandardItemModel *model)

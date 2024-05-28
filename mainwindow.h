@@ -42,14 +42,11 @@ private:
     Ui::MainWindow *ui;
 protected:
     DataBaseManager *db; // бд
-    void FillTree(); // функция для заполнения
     QStandardItemModel *model; //модель
     int Container_User_Choice;
-    //void WriteDataToTable(Iterator<ScumPointer> *it);
-    //void Create_Containers(int User_Choice);
-    QThread Thread_1;
-    QThread Thread_2;
-    WriteObject Object_1;
-    WriteObject Object_2;
+    QThread *Thread_1;
+    QThread *Thread_2;
+    WriteObject *Object_1;
+    WriteObject *Object_2;
 };
 #endif // MAINWINDOW_H
