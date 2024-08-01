@@ -4,6 +4,10 @@
 #include <QElapsedTimer>
 #include <QDebug>
 #include <QThread>
+#include <ctime>
+#include <iomanip>
+#include <sstream>
+
 WriteObject::WriteObject(QObject *parent)
     : QObject{parent}
 {
@@ -24,6 +28,20 @@ QString timeElapsedToString(qint64 elapsed)
             .arg(minutes, 2, 10, QChar('0'))
             .arg(seconds, 2, 10, QChar('0'))
             .arg(milliseconds, 3, 10, QChar('0'));
+}
+
+string generateRandomString(size_t length) {
+    const char charset[] =
+        "abcdefghijklmnopqrstuvwxyz"
+        "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+        "0123456789";
+    const size_t max_index = sizeof(charset) - 1;
+
+    std::string random_string;
+    for (size_t i = 0; i < length; ++i) {
+        random_string += charset[rand() % max_index];
+    }
+    return random_string;
 }
 //функция записи данных
 void WriteObject::WriteDataToTable(Iterator<ScumPointer> *it)
@@ -79,7 +97,8 @@ void WriteObject::Create_Containers()
     };
     if(UserChoice == 3)
     {
-        UltraWildMutantContainer scumcell_sqlite(Path.toStdString());
+        string path_to_db = "mutant"+generateRandomString(10)+".db";
+        UltraWildMutantContainer scumcell_sqlite(path_to_db);
         scumcell_sqlite.ClearDB();
         for(int i=0; i<random_amount_of_mutant; i++)
         {
