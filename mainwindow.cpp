@@ -97,14 +97,14 @@ void MainWindow::on_No_Thread_Button_clicked()
 {
     model = new QStandardItemModel(this);
     Object_1 = new WriteObject(); // создааем часть данных
-
+    /*
     if (Container_User_Choice == 3)
     {
         QString FileName = QFileDialog::getOpenFileName(this,
                     tr("Выберите SQLITE базу данных"), "", tr("SQLITE3 Databases (*.db)"));
         Object_1->setPathToDB(FileName);
     }
-
+    */
     connect(Object_1, SIGNAL(UpdateProgressBar(int)), ui->progressBar, SLOT(setValue(int)));
     connect(Object_1, SIGNAL(UpdateLabel(QString)), ui->time_label, SLOT(setText(QString)));
 
@@ -130,13 +130,14 @@ void MainWindow::on_One_Thread_Button_clicked()
     Object_1 = new WriteObject();
     Thread_1 = new QThread(); // создаем поток
     ui->progressBar->setRange(0,1999);
-
+    /*
     if (Container_User_Choice == 3)
     {
         QString FileName = QFileDialog::getOpenFileName(this,
                     tr("Выберите SQLITE базу данных"), "", tr("SQLITE3 Databases (*.db)"));
         Object_1->setPathToDB(FileName);
     }
+    */
     model->setColumnCount(4);
 
     model->setHeaderData(0,Qt::Horizontal,"Тип мутанта");
@@ -170,7 +171,7 @@ void MainWindow::on_Two_Thread_Button_clicked()
     Thread_1 = new QThread();
     Thread_2 = new QThread();
     ui->progressBar->setRange(0,999);
-
+    /*
     if (Container_User_Choice == 3)
     {
         QString FileName = QFileDialog::getOpenFileName(this,
@@ -178,7 +179,7 @@ void MainWindow::on_Two_Thread_Button_clicked()
         Object_1->setPathToDB(FileName);
         Object_2->setPathToDB(FileName);
     }
-
+    */
     model->setColumnCount(4);
 
     model->setHeaderData(0,Qt::Horizontal,"Тип мутанта");
